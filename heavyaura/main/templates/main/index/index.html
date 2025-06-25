@@ -16,7 +16,11 @@
         <div class="home-carts">
             {% for product in products %}
                 <a href="{{ product.get_absolute_url }}" class="home-card">
-                    <img src="{% if product.image %}{{% product.image.url %}}{% else %}{% static 'img/noimage.jpg' %}{% endif %}" class="card-img" alt="">
+                     {% if product.image %}
+                        <img src="{{ product.image.url }}" class="card-img" alt="{{ product.name }}">
+                    {% else %}
+                        <img src="{% static 'img/noimage.jpg' %}" class="card-img" alt="No image">
+                    {% endif %}
                     <h5 class="title-card">{{ product.name }}</h5>
                     {% if product.discount %}
                         <div class="cart-discount">
