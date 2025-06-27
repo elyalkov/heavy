@@ -1,26 +1,26 @@
 from django.db import models
 from django.urls import reverse
-
+#reverse это функция, которая делает обратное преобразование маршрута из имени маршрута
 
 class Category(models.Model):
     name = models.CharField(max_length=20,
-                            unique=True)
+                            unique=True) #две категории не могут иметь одинаковое имя
     slug = models.SlugField(max_length=20,
                             unique=True)
 
 
     class Meta:
-        ordering = ['name']
-        indexes = [models.Index(fields=['name'])] #поиск будет выполнятся по полю name
+        ordering = ['name'] #[] чтобы задавать СПИСКИ полей
+        indexes = [models.Index(fields=['name'])] #Index — способ создать индекс на уровне базы данных / поиск будет выполнятся по полю name
         verbose_name = 'category'
         verbose_name_plural = 'categories'
 
-    def get_absolute_url(self):
+    def get_absolute_url(self): #метод говорит, какой URL соответствует этому объекту
         return reverse('main:product_list_by_category',
-                           args=[self.slug])
+                           args=[self.slug]) #args — это список значений, которые подставляются в путь
 
 
-    def __str__(self): #функция для получения имя катигории
+    def __str__(self): #функция для получения имя катигории, т.е. что мы увидим в админке
         return self.name
 
 
